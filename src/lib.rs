@@ -262,10 +262,39 @@ impl From<NulError> for Trans2QuikError {
 /// and calling functions from the library to control the terminal and perform trading operations.
 ///
 /// # Example of use
+/// Cargo.toml
 /// ```
-/// let path = r"c:\QUIK Junior\trans2quik.dll";
-/// let terminal = quik::Terminal::new(path)?;
-/// terminal.connect()?;
+/// trans2quik = "0.1.1"
+/// tracing = "0.1.40"
+/// tracing-subscriber = "0.3.18"
+/// ```
+/// main.rs
+/// ```
+/// use tracing_subscriber;
+/// use trans2quik;
+///
+///
+/// fn main() -> Result<(), Box<dyn std::error::Error>> {
+///     tracing_subscriber::fmt::init();
+///
+///     let path = r"c:\QUIK Junior\trans2quik.dll";
+///     let terminal = trans2quik::Terminal::new(path)?;
+///     terminal.connect()?;
+///     terminal.is_dll_connected()?;
+///     terminal.is_quik_connected()?;
+///     terminal.set_connection_status_callback()?;
+///     terminal.set_transactions_reply_callback()?;
+///     let class_code = "QJSIM";
+///     let sec_code = "LKOH";
+///     terminal.subscribe_orders(class_code, sec_code)?;
+///     terminal.subscribe_trades(class_code, sec_code)?;
+///     terminal.start_orders();
+///     terminal.start_trades();
+///     let transaction_str = "ACCOUNT=NL1234567890; CLIENT_CODE=12345; TYPE=L; TRANS_ID=1; CLASSCODE=QJSIM; SECCODE=LKOH; ACTION=NEW_ORDER; OPERATION=B; PRICE=7103,5; QUANTITY=1;";
+///     terminal.send_async_transaction(transaction_str)?;
+///
+///     Ok(())
+/// }
 /// ```
 pub struct Terminal {
     /// Loading a dynamic library Trans2QUIK.dll, which provides an API for interacting with QUIK.
