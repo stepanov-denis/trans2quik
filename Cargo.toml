@@ -1,6 +1,6 @@
 [package]
 name = "trans2quik"
-version = "1.0.2"
+version = "1.0.3"
 authors = ["Denis Stepanov", "<stepanov.d.m@yandex.ru>"]
 edition = "2021"
 description = "Library for importing transactions, entering orders into the QUIK ARQA Technologies trading system via the API."
